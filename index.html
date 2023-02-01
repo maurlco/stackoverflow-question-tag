@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <script>
+      function sendPostRequest() {
+        const inputField = document.getElementById("inputField");
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://52.5.157.238:5000/api/v1/generate-tags", true);
+        // xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(JSON.parse(xhr.responseText));
+            }
+        };
+        xhr.send(JSON.stringify({ text: "example text", title: "example title" }));
+      }
+    </script>
+  </head>
+  <body>
+    <input type="text" id="inputField" />
+    <button onclick="sendPostRequest()">Submit</button>
+  </body>
+</html>
