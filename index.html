@@ -4,9 +4,8 @@
       function sendPostRequest() {
         const inputField = document.getElementById("inputField");
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "https://52.5.157.238:5000/api/v1/generate-tags", true);
+        xhr.open("POST", "http://52.5.157.238:5000/api/v1/generate-tags", true);
         xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 console.log(JSON.parse(xhr.responseText));

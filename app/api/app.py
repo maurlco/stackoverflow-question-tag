@@ -5,7 +5,15 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def get_simple_ui_home():
-    return "<h1>Coucou</h1><p>petit text</p>"
+    text_file = open("../index.html", "r")
+
+    #read whole file to a string
+    index_html_page = text_file.read()
+
+    #close file
+    text_file.close()
+
+    return index_html_page
 
 
 @app.route('/api/v1/generate-tags', methods=['POST'])

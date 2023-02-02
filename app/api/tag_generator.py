@@ -40,10 +40,9 @@ class TagGenerator:
         return doc_df
 
     def predict_emdedded_matrix(self, doc_df):
-        print('loading the MultiOutputClassifier model with torch ... ')
+        # print('loading the MultiOutputClassifier model with torch ... ')
         loaded_model = torch.load('tfidf_model_2.pt')
-        print('Predicting the document (dataframed embedded matrix) ...  ')
-        print(doc_df.shape)
+        print('Predicting the tags for your title and text  ...  ')
         pred = loaded_model.predict(doc_df)
         doc_pred = pd.DataFrame(pred)
         target_labels = pd.read_csv('tfidf_labels_tags.csv')
@@ -52,20 +51,23 @@ class TagGenerator:
             array_tags.append(row[0])
         doc_pred.columns = array_tags
         doc_pred = doc_pred.T[0]
-        print('Transpose Dtaframe with column names : ', doc_pred.T)
-        print('Type of the transpose : ', type(doc_pred.T[0]))
         doc_tags = doc_pred[doc_pred == 1]
-        return np.array(doc_tags.index)
+        print('doc_tags : ',doc_tags)
+        print('type of doc_tags : ', type(doc_tags))
+        print('\n Done')
+        print('array of tags : ',np.array(doc_tags.index))
+        array = np.array(doc_tags.index)
+        print(" ".join(array))
+        return " ".join(array)
 
     def generate_tag(self, title, text):
         print('1/ Preprocessing the title & Text ...')
         #call the preprocessing fonction
         text = self.preprocess_fct(title, text)
-        print(text)
-        print(type(text))
+        print(' ')
+        print('\n Done')
         print('2/ Transforming the Text into an embedding matrix ... ')
-        #call the USE
         doc_df = self.tfidf_embedding(text)
-        print('Embedded matrix Dataframe : ',doc_df)
-        print('3/ Load the MultiOutputClassifier and 126 target_labels to predict thet tags of the input text ...')
-        return self.predict_emdedded_matrix(doc_df).tolist()
+        print('\n Done')
+        print('3/ Load the MultiOutputClassifier and 126 target_labels to predict the tags of the input text ...')
+        return self.predict_emdedded_matrix(doc_df)
